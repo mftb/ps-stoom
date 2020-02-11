@@ -3,6 +3,9 @@ package address;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.client.RestTemplate;
+import com.google.maps.*;
+import com.google.maps.model.GeocodingResult;
 
 import java.util.List;
 
@@ -24,6 +27,31 @@ class AddressController {
 
     @PostMapping("/Address")
     Address newAddress(@RequestBody Address newAddress) {
+        if (newAddress.getLatitude() == null || newAddress.getLongitude() == null ) {
+            // retrieve latitude and longitude from google geocoding
+            String key = "AIzaSyBm3xh9oZP1ksMWcMzVaZQevWlrtb8tIgc";
+            String readable_addres =  newAddress.getNumber().toString() + " " + newAddress.getStreetName() +
+                    " " + newAddress.getCity() + " " + newAddress.getState();
+
+            GeoApiContext context = new GeoApiContext.Builder()
+                    .apiKey(key)
+                    .build();
+            try {
+                GeocodingResult[] results =  GeocodingApi.geocode(context,
+                        readable_addres).await();
+
+                if (results.length > 0) {
+                    Double lat = results[0].geometry.location.lat;
+                    Double lng = results[0].geometry.location.lng;
+                    newAddress.setLatitude(lat.toString());
+                    newAddress.setLongitude(lng.toString());
+                }
+            } catch (Exception exception) {
+                newAddress.setLatitude("");
+                newAddress.setLongitude("");
+            }
+
+        }
         try {
             return repository.save(newAddress);
         } catch (Exception exception) {
