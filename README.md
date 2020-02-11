@@ -23,3 +23,61 @@ $ ./mvnw clean spring-boot:run
 $ cd address
 $ ./mvnw test
 ```
+
+## How to interact with the application
+### Retrieve all addresses
+```
+GET http://localhost:8080/Address
+```
+
+### Retrieve an address
+```
+GET http://localhost:8080/Address/<id>
+```
+
+### Delete an address
+```
+DELETE http://localhost:8080/Address/<id>
+```
+
+### Create a new address
+```
+POST http://localhost:8080/Address
+```
+
+Request body:
+```JSON
+{
+  "streetName":"streetName",
+  "number": 123,
+  "complement":"complement",
+  "neighbourhood":"neighbourhood",
+  "city":"city",
+  "state":"state",
+  "country":"country",
+  "zipcode":"zipcode",
+  "latitude":"latitude",
+  "longitude":"longitude"
+}
+```
+
+### Update an existing address
+```
+PUT http://localhost:8080/Address/<id>
+```
+
+Request body:
+```JSON
+{
+  "streetName":"streetName",
+  "number": 123,
+  "complement":"complement",
+  "neighbourhood":"neighbourhood",
+  "city":"city",
+  "state":"state",
+  "country":"country",
+  "zipcode":"zipcode",
+  "latitude":"latitude",
+  "longitude":"longitude"
+}
+```
