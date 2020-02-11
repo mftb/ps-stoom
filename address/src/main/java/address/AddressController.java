@@ -1,6 +1,8 @@
 package address;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -22,7 +24,12 @@ class AddressController {
 
     @PostMapping("/Address")
     Address newAddress(@RequestBody Address newAddress) {
-        return repository.save(newAddress);
+        try {
+            return repository.save(newAddress);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Bad Data");
+        }
     }
 
     // Single item
@@ -49,12 +56,23 @@ class AddressController {
                     Address.setState(newAddress.getState());
                     Address.setStreetName(newAddress.getStreetName());
                     Address.setZipcode(newAddress.getZipcode());
-                    return repository.save(Address);
+                    try {
+                        return repository.save(Address);
+                    } catch (Exception exception) {
+                        throw new ResponseStatusException(
+                                HttpStatus.BAD_REQUEST, "Bad Data");
+                    }
                 })
                 .orElseGet(() -> {
-                    newAddress.setId(id);
-                    return repository.save(newAddress);
+                    try {
+                        newAddress.setId(id);
+                        return repository.save(newAddress);
+                    } catch (Exception exception) {
+                        throw new ResponseStatusException(
+                                HttpStatus.BAD_REQUEST, "Bad Data");
+                    }
                 });
+
     }
 
     @DeleteMapping("/Address/{id}")
