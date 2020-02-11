@@ -18,13 +18,14 @@ class AddressController {
         this.repository = repository;
     }
 
-    // Aggregate root
 
+    // lists all addresses
     @GetMapping("/Address")
     List<Address> all() {
         return repository.findAll();
     }
 
+    // creates new address
     @PostMapping("/Address")
     Address newAddress(@RequestBody Address newAddress) {
         if (newAddress.getLatitude() == null || newAddress.getLongitude() == null ) {
@@ -50,7 +51,6 @@ class AddressController {
                 newAddress.setLatitude("");
                 newAddress.setLongitude("");
             }
-
         }
         try {
             return repository.save(newAddress);
@@ -60,8 +60,7 @@ class AddressController {
         }
     }
 
-    // Single item
-
+    // retrieves a specfic address
     @GetMapping("/Address/{id}")
     Address one(@PathVariable Long id) {
 
@@ -69,6 +68,7 @@ class AddressController {
                 .orElseThrow(() -> new AddressNotFoundException(id));
     }
 
+    // updates a specific address
     @PutMapping("/Address/{id}")
     Address replaceAddress(@RequestBody Address newAddress, @PathVariable Long id) {
 
@@ -103,6 +103,7 @@ class AddressController {
 
     }
 
+    // deletes an address
     @DeleteMapping("/Address/{id}")
     void deleteAddress(@PathVariable Long id) {
         repository.deleteById(id);

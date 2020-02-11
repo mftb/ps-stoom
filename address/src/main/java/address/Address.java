@@ -34,7 +34,6 @@ public class Address {
     Address() {
     }
 
-    // TODO: refactor construcotr to use builder pattern or a factory method in order to handle with null latitude and longitude and call the google maps api
     Address(String streetName, Integer number, String complement, String neighbourhood, String city, String state, String country, String zipcode, String latitude, String longitude) {
         this.streetName = streetName;
         this.number = number;
