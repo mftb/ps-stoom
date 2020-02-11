@@ -1,10 +1,18 @@
 # Processo Seletivo Stoom
 
-The application is inside **address** directory
+## Details
 
-Maven was chosen as dependency manager
+The application was implemented in **Java 1.8** using **Spring Boot 2.2.4**
 
-There is a Dockerfile provided in address/Dockerfile to run the application with docker
+The application is inside the **address** directory
+
+**Maven** was chosen as dependency manager
+
+The application is using **Google Maps** library for latitude and longitude retrieval
+
+There is a **Dockerfile** provided in address/Dockerfile to run the application with docker
+
+**Integration tests** were created for all endpoints
 
 ## How to run the application with docker
 ```
