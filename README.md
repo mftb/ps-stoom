@@ -1,4 +1,4 @@
-# Processo Seletivo Stoom
+# PS Stoom
 
 ## Details
 
